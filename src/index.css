@@ -13,7 +13,7 @@ code {
 }
 
 .breadCrumbBlock {
-  margin: 15px ;
+  margin: 15px;
   color: black;
 }
 .breadCrumbBlock a {
@@ -26,3 +26,27 @@ code {
 .no-last {
   opacity: 0.5;
 }
+.labelStyles {
+  color: white;
+  font-weight: bold;
+  position: relative;
+  right: 45%;
+}
+.fillerStyles {
+  height: 100%;
+  background-color: rgb(0, 60, 255);
+  border-radius: inherit;
+  text-align: right;
+}
+.containerStyles {
+  height: 20px;
+  max-width: 500px;
+  background-color: rgb(187, 187, 187);
+  border-radius: 10px;
+  margin: 50px;
+}
+.containerSelect {
+  padding: 0 0 0 100px;
+  max-width: 300px;
+}
+
