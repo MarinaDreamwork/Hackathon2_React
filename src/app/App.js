@@ -3,17 +3,17 @@ import AppRouter from "./components/AppRouter";
 import Navbar from "./components/common/navbar";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getIsLoadingStatus,
+  getDataLoadedStatus,
   loadParticipantsList,
 } from "../store/participants";
 import BreadCrumb from "./components/common/breadcrumbs";
 
 const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoadingStatus());
+  const isLoadingData = useSelector(getDataLoadedStatus());
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoadingData) {
       dispatch(loadParticipantsList());
     }
   }, []);

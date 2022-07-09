@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Button = ({ color, name, ...rest }) => {
+const Button = ({ style, color, name, ...rest }) => {
   return (
-    <button className={"btn btn-sm m-1 btn-" + color} {...rest}>
+    <button className={"btn btn-" + color + " " + style} {...rest}>
       {name}
     </button>
   );
 };
 
 Button.propTypes = {
+  style: PropTypes.string,
   color: PropTypes.string,
   name: PropTypes.string,
 };

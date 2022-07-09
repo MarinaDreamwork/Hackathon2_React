@@ -6,8 +6,14 @@ import TextField from "../common/form/textField";
 import RangeArea from "../common/form/rangeArea";
 import { useTechnologies } from "../../hooks/technologies";
 import TechnologiesFields from "./technologiesField";
+import SocialNetworkGroup from "./socialNetworkGroupField";
+import { useHistory } from "react-router-dom";
+import Button from "../common/button";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../../store/participants";
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -20,6 +26,7 @@ const RegisterForm = () => {
     technologies: []
   });
   const [errors, setErrors] = useState({});
+  const history = useHistory();
 
   const handleChange = ({ target }) => {
     setData(prevState => ({
@@ -42,15 +49,24 @@ const RegisterForm = () => {
     }));
   };
 
+  const handleSocialGroupChange = (id, { target }) => {
+    setData(prevState => ({
+      ...prevState,
+      [target.name]: [...prevState[target.name], { id: id, link: target.value }]
+    }));
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
-    // здесь регистрация пользователя / отправка данных на сервер / там внутри - получение current user
+    // здесь регистрация пользователя / отправка данных на сервер / там внутри - получение current user / переход на главную страницу 
     console.log("data", data);
+    dispatch(signUp(data));
+    history.push("/");
   };
 
   return ( 
     <form onSubmit={handleRegister}>
-      <h2>Форма регистрации</h2>
+      <h2 className="d-flex justify-content-center fw-semibold">Форма регистрации</h2>
       <TextField
         label="Ваш email:"
         type="text"
@@ -90,37 +106,44 @@ const RegisterForm = () => {
         onFieldChange={handleChange}
       />
       <FileInput
+        label="Загрузите Ваше фото:"
         type="file"
         name="photo"
         value={data.photo}
         onFieldChange={handleChange}
       />
-      <CheckboxField
+      {/* <CheckboxField
         label="Выберете ваши социальные сети:"
         type="checkbox"
         name="social_networks"
         value={data.social_networks}
         onFieldChange={handleCheckbox}
-        />
+        /> */}
       <TextArea 
         label="Чем занимался при разработке данного проекта:"
         name="role"
         value={data.role}
         onFieldChange={handleChange}
       />
-     <TechnologiesFields
+     {/* <TechnologiesFields
         label="Выберете от 0 до 100 ваше знание технологии:"
         value={data.technologies}
         name="technologies"
         type="number"
         onFieldChange={handleRangeChange}
         error={errors.technologies}/>
-      {/* <RangeArea
-        type="range"
-        value={data.technologies}
-        onFieldChange={handleRangeChange}
+      <SocialNetworkGroup
+        label="Социальные сети:"
+        onFieldChange={handleSocialGroupChange}
+        name="social_networks"
+        value={data.social_networks}
+        type="text"
+        error={errors.social_networks}
       /> */}
-      <button className="btn btn-secondary">Зарегистрироваться</button>
+      <div className="d-flex">
+        <Button color="secondary m-auto" name="Зарегистрироваться">
+        </Button>
+      </div>
     </form>
   );
 };

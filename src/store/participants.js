@@ -1,4 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
+import authService from "../services/auth.service";
 import { localStorageService } from "../services/localStorage.service";
 import participantService from "../services/participant.service";
 
@@ -8,13 +9,15 @@ const initialState = localStorageService.getAccessToken()
     isLoading: true,
     error: null,
     auth: { userId: localStorageService.getUserId() },
-    isOnline: true
+    isOnline: true,
+    dataLoaded: false
 } : {
     data: null,
     isLoading: false,
     error: null,
     auth: null,
-    isOnline: false
+    isOnline: false,
+    dataLoaded: false
 };
 
 const participantsSlice = createSlice({
@@ -27,10 +30,21 @@ const participantsSlice = createSlice({
     participantsRequestedSuccess: (state, action) => {
       state.data = action.payload;
       state.isLoading = false;
+      state.dataLoaded = true;
     },
     participantsRequestedFailed: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
+    },
+    authRequestedSuccess: (state, action) => {
+      state.auth = action.payload;
+      state.isOnline = true;
+    },
+    participantCreatedRequestSuccess: (state, action) => {
+       if (!Array.isArray(state.data)) {
+        state.data = [];
+      }
+        state.data.push(action.payload);
     }
   }
 });
@@ -39,8 +53,15 @@ const { reducer: participantsReducer, actions } = participantsSlice;
 const {
   participantsRequested,
   participantsRequestedSuccess,
-  participantsRequestedFailed
+  participantsRequestedFailed,
+  authRequestedSuccess,
+  participantCreatedRequestSuccess
 } = actions;
+
+const authRequest = createAction("participants/authRequest");
+const authRequestFailed = createAction("participants/authRequestFailed");
+const participantCreatedRequest = createAction("participants/createdRequest");
+const participantCreatedRequestFailed = createAction("participants/createdRequestFailed");
 
 export const loadParticipantsList = () => async (dispatch) => {
   dispatch(participantsRequested());
@@ -52,9 +73,39 @@ export const loadParticipantsList = () => async (dispatch) => {
   }
 };
 
+export const signUp = ({
+  email,
+  password,
+  ...rest 
+}) => async (dispatch) => {
+    dispatch(authRequest());
+    try {
+      const dataContent = await authService.register({ email, password });
+      localStorageService.setAuthTokens(dataContent);
+      dispatch(authRequestedSuccess({ userId: dataContent.localId }));
+      dispatch(createParticipant({
+      id: dataContent.localId,
+      email,
+      ...rest
+    }));
+  } catch (error) {
+    dispatch(authRequestFailed(error.message));
+  }
+};
+
+export const createParticipant = (payload) => async (dispatch) => {
+  dispatch(participantCreatedRequest());
+  try {
+    const dataContent = await participantService.create(payload);
+    dispatch(participantCreatedRequestSuccess(dataContent));
+  } catch (error) {
+    dispatch(participantCreatedRequestFailed(error.message));
+  }
+};
+
 export const getIsLoadingStatus = () => (state) => state.participants.isLoading;
 
 export const getParticipants = () => (state) => state.participants.data;
-
+export const getDataLoadedStatus = () => (state) => state.participants.dataLoaded;
 
 export default participantsReducer;
