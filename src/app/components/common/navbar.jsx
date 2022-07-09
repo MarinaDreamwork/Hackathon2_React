@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { MAIN_ROUTE, FAVORITES_ROUTE } from "../../utils/constants";
 
 const Navbar = () => {
