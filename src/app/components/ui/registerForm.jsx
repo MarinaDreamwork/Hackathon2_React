@@ -3,6 +3,9 @@ import FileInput from "../common/form/fileInput";
 import CheckboxField from "../common/form/checkboxField";
 import TextArea from "../common/form/textArea";
 import TextField from "../common/form/textField";
+import RangeArea from "../common/form/rangeArea";
+import { useTechnologies } from "../../hooks/technologies";
+import TechnologiesFields from "./technologiesField";
 
 const RegisterForm = () => {
   const [data, setData] = useState({
@@ -13,7 +16,8 @@ const RegisterForm = () => {
     about_myself: "",
     photo: "",
     social_networks: [],
-    role: ""
+    role: "",
+    technologies: []
   });
   const [errors, setErrors] = useState({});
 
@@ -24,8 +28,23 @@ const RegisterForm = () => {
     })); 
   };
 
+  const handleCheckbox = (id) => {
+    setData(prevState => ({
+      ...prevState,
+      social_networks: [...prevState.social_networks, id]
+    }));
+  };
+
+   const handleRangeChange = ({ target }) => {
+    setData(prevState => ({
+      ...prevState,
+      technologies: [...prevState.technologies, { ...prevState.technologies, id: id, progressInPercent: target.value}]
+    }));
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
+    // здесь регистрация пользователя / отправка данных на сервер / там внутри - получение current user
     console.log("data", data);
   };
 
@@ -81,7 +100,7 @@ const RegisterForm = () => {
         type="checkbox"
         name="social_networks"
         value={data.social_networks}
-        onFieldChange={handleChange}
+        onFieldChange={handleCheckbox}
         />
       <TextArea 
         label="Чем занимался при разработке данного проекта:"
@@ -89,6 +108,18 @@ const RegisterForm = () => {
         value={data.role}
         onFieldChange={handleChange}
       />
+     <TechnologiesFields
+        label="Выберете от 0 до 100 ваше знание технологии:"
+        value={data.technologies}
+        name="technologies"
+        type="number"
+        onFieldChange={handleRangeChange}
+        error={errors.technologies}/>
+      {/* <RangeArea
+        type="range"
+        value={data.technologies}
+        onFieldChange={handleRangeChange}
+      /> */}
       <button className="btn btn-secondary">Зарегистрироваться</button>
     </form>
   );

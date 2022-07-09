@@ -22,9 +22,9 @@ const BreadCrumb = () => {
               const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
               const isLast = index === pathnames.length - 1;
               return isLast ? (
-                <li className="breadcrumb-item">{capatilize(name)}</li>
+                <li key={index} className="breadcrumb-item">{capatilize(name)}</li>
               ) : (
-                <li className="breadcrumb-item no-last">
+                <li key={index} className="breadcrumb-item no-last">
                   <Link to={`${routeTo}`}>{capatilize(name)}</Link>
                 </li>
               );
