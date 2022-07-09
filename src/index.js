@@ -7,6 +7,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
 import { createStore } from "./store/createStore";
+import { SocialNetworkProvider } from "./app/hooks/socialNetwork";
+import { TechnologiesProvider } from "./app/hooks/technologies";
 
 const store = createStore();
 
@@ -14,7 +16,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <SocialNetworkProvider>
+          <TechnologiesProvider>
+            <App />
+          </TechnologiesProvider>
+        </SocialNetworkProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

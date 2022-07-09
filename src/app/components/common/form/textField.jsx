@@ -15,7 +15,7 @@ const TextField = ({ label, type, name, value, onFieldChange, error }) => {
         value={value}
         className="form-control"
         id="exampleFormControlInput1"
-        placeholder={name}
+        placeholder={type !== "number" ? name : "0"}
         onChange={onFieldChange}
         error={error}
       />

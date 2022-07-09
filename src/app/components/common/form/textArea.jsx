@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TextArea = ({ label, onFieldChange, name }) => {
+const TextArea = ({ label, onFieldChange, name, value }) => {
   return (
     <div className="mb-3">
       <label
@@ -10,6 +10,7 @@ const TextArea = ({ label, onFieldChange, name }) => {
           {label}
       </label>
       <textarea
+        value={value}
         name={name}
         className="form-control"
         id="exampleFormControlTextarea1"
@@ -23,7 +24,8 @@ const TextArea = ({ label, onFieldChange, name }) => {
 TextArea.propTypes = {
   label: PropTypes.string.isRequired,
   onFieldChange: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired
 };
  
 export default TextArea;
