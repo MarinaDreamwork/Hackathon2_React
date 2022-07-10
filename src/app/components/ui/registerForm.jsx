@@ -13,24 +13,22 @@ import { getIsLoadingTechStatus } from "../../../store/technologies";
 import { useSocialNetwork } from "../../hooks/socialNetwork";
 import { getTechnologies } from "../../../store/technologies";
 import Preloader from "../common/preloader";
+import { storage } from "../../../firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import PropTypes from "prop-types";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const keySkillsList = useSelector(getKeySkills());
   const technologies = useSelector(getTechnologies());
-  console.log("technologies", technologies);
-  console.log(keySkillsList);
   const isTechLoading = useSelector(getIsLoadingTechStatus());
-  //const technologies  = dispatch(getTechnologies());
   const { socialNetworks } = useSocialNetwork();
-  console.log("keySkills", keySkillsList);
+
   const [data, setData] = useState({
     email: "",
     password: "",
     name: "",
     age: 0,
     about_myself: "",
-    photo: "",
     role: "",
     key_skills: [],
     HTML: {id: "", result: ""},
@@ -41,6 +39,7 @@ const RegisterForm = () => {
     telegram: ""
   });
   const [errors, setErrors] = useState({});
+  const [photoUpload, setPhotoUpload] = useState(null);
   
   const history = useHistory();
 
@@ -49,6 +48,14 @@ const RegisterForm = () => {
       ...prevState,
       [target.name]: target.value
     })); 
+  };
+
+  const handleUpload = ({target}) => {
+    setPhotoUpload(target.files[0]);
+    setData(prevState => ({
+      ...prevState,
+      [target.name]: target.files[0].name
+    }));
   };
 
    const handleGroupFieldsChange = ({ target }) => {
@@ -89,16 +96,23 @@ const RegisterForm = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // здесь регистрация пользователя / отправка данных на сервер / там внутри - получение current user / переход на главную страницу 
-    console.log("data", data);
-    dispatch(signUp({
-      ...data 
-    }));
+    // получение current user 
+    if(photoUpload === null) return;
+    const imageRef = ref(storage, `photos/${photoUpload.name}`);
+    uploadBytes(imageRef, photoUpload).then(() => {
+      alert("Your image uploaded successfully!");
+    });
+    dispatch(signUp(data));
     history.push("/");
   };
 
   if(isTechLoading) {
-    return <Preloader style="text-secondary" text="Данные загружаются для вас..." />;
+    return (
+      <Preloader
+        style="text-secondary"
+        text="Данные загружаются для вас..." 
+      />
+    );
   } else {
 
   return ( 
@@ -147,7 +161,8 @@ const RegisterForm = () => {
         type="file"
         name="photo"
         value={data.photo}
-        onFieldChange={handleChange}
+        photoUpload={photoUpload}
+        onFieldChange={handleUpload}
       />
       <TextArea 
         label="Чем занимался при разработке данного проекта:"
@@ -191,6 +206,10 @@ const RegisterForm = () => {
     </form>
   );
   }
+};
+
+RegisterForm.propTypes = {
+  name: PropTypes.string
 };
  
 export default RegisterForm;
