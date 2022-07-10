@@ -17,12 +17,11 @@ const Main = () => {
   useEffect(() => {
     listAll(photosListRef).then((response) => {
       response.items.forEach((item) => {
-        console.log("item", item);
         const newName = item._location.path_.replace("photos/", "");
         getDownloadURL(item).then(url => {
-          setPhotosList((prevState) => [{
+          setPhotosList((prevState) => [
             ...prevState,
-            url: url,
+            {url: url,
             photo: newName
           }]);
         });
