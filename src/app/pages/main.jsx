@@ -5,6 +5,7 @@ import {
   getParticipants,
   loadParticipantsList,
 } from "../../store/participants";
+import Slider from "../components/common/slider";
 
 const Main = () => {
   const isLoading = useSelector(getIsLoadingStatus());
@@ -13,6 +14,7 @@ const Main = () => {
   return (
     <>
       <h2 className="text-center">Главная страница</h2>
+      <Slider />
       {/* вывод участников {!isLoading &&
       participants.map((p, i) => <><p key={i}>{p.name}</p></>)} */}
     </>
