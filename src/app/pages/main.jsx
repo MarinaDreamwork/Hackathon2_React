@@ -43,11 +43,11 @@ const Main = () => {
 
   return (
     <div>
-      <h2 className="text-center">Главная страница</h2>
-      <Slider />
-      {
+      <h4 className="text-center border p-2">Наша команда состоит из ребят, которые учатся в школе Владилена Result School.<br />Каждый участник добился больших успехов хотя бы потому, что дошел до конца модуля по React. <br />Мы хотели сделать очень классный и навороченный проект, но нам не хватило на это времени, к сожалению.<br /></h4>
+      <Slider photosList={photosList}/>
+      {/* {
         test.map(i => <Progress changeSelect = {changeSelect} key={i.id} bgColor={i.bgColor} completed={i.completed} label={i.label} type={i.type}/>)
-      }
+      } */}
     </div>
   );
 };

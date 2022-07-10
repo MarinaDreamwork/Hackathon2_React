@@ -97,7 +97,7 @@ code {
     background-position: center;
     background-repeat: no-repeat; 
     background-size: cover; 
-    background-image: url('../public/avatar.jpg')
+    /* background-image: url('../public/avatar.jpg') */
   }
   .img {
     width: 150px;
@@ -106,9 +106,15 @@ code {
     background-position: center;
     background-repeat: no-repeat; 
     background-size: cover; 
-    background-image: url('../public/avatar.jpg');
+    /* background-image: url('../public/avatar.jpg'); */
     border-radius: 20px;
     
+  }
+  .img-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 5%;
+    object-fit: cover;
   }
   
   .badges {
@@ -140,9 +146,17 @@ code {
   .favorites {
     position: absolute;
     bottom: 15px;
-    left: 130px;
-   opacity: 0;
+    left: 230px;
+    opacity: 0;
   }
+
+  .participant {
+    position: absolute;
+    bottom: 15px;
+    left: 100px;
+    opacity: 0;
+  }
+
   .active-flex {
     margin-bottom: 20px;
   }

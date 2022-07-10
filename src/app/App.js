@@ -18,8 +18,6 @@ const App = () => {
   const isLoadingKeySkills = useSelector(getIsKeyLoadingStatus());
   const isLoadingTech = useSelector(getIsLoadingTechStatus());
 
-  const participants = useSelector(getParticipants());
-
   useEffect(() => {
     if (!isLoadingData && !isLoadingKeySkills && !isLoadingTech) {
       dispatch(loadParticipantsList());
@@ -37,13 +35,6 @@ const App = () => {
       <Navbar />
       <BreadCrumb />
       <AppRouter />
-      {/* {
-        participants.map( i => (
-          <div key={i.id}>
-            <p>{i.name}</p>
-          </div>
-        ))
-      } */}
     </>
   );
   };
