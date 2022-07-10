@@ -1,8 +1,12 @@
 import React from "react";
 import Badge from "./badge";
 import Button from "./button";
+import PropTypes from "prop-types";
 
-const Slider = () => {
+import { addParticipant, getFavorites } from "../../../store/favorites";
+import { useDispatch, useSelector } from "react-redux";
+
+const Slider = ({ participant }) => {
   const slides = document.querySelectorAll(".slide");
   function clearActiveClasses() {
     slides.forEach((slide) => {
@@ -18,7 +22,14 @@ const Slider = () => {
       });
     }
   };
-  const bookmark = () => console.log("bookmark");
+  // const bookmark = () => console.log("bookmark");
+
+  const dispatch = useDispatch();
+
+  const handleAdd = () => {
+    dispatch(addParticipant(participant));
+  };
+
   return (
     <div className="main_wrapper">
       <div className="slider_wrapper">
@@ -41,7 +52,7 @@ const Slider = () => {
           <Button
             color="warning favorites"
             name="Добавить в избранное"
-            onClick={bookmark}
+            onClick={handleAdd}
           />
         </div>
         <div className="slide" onClick={toggleActive}>
@@ -64,8 +75,9 @@ const Slider = () => {
           <Button
             color="warning favorites"
             name="Добавить в избранное"
-            onClick={bookmark}
+            onClick={handleAdd}
           />
+          <button className="btn btn-danger">Удалить</button>
         </div>
         <div className="slide active" onClick={toggleActive}>
           <div className="active-flex">
@@ -86,7 +98,7 @@ const Slider = () => {
           <Button
             color="warning favorites"
             name="Добавить в избранное"
-            onClick={bookmark}
+            onClick={handleAdd}
           />
         </div>
         <div className="slide" onClick={toggleActive}>
@@ -109,7 +121,7 @@ const Slider = () => {
           <Button
             color="warning favorites"
             name="Добавить в избранное"
-            onClick={bookmark}
+            onClick={handleAdd}
           />
         </div>
         <div className="slide" onClick={toggleActive}>
@@ -132,12 +144,16 @@ const Slider = () => {
           <Button
             color="warning favorites"
             name="Добавить в избранное"
-            onClick={bookmark}
+            onClick={handleAdd}
           />
         </div>
       </div>
     </div>
   );
+};
+
+Slider.propTypes = {
+  participant: PropTypes.object
 };
 
 export default Slider;

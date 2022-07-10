@@ -5,21 +5,22 @@ import participantService from "../services/participant.service";
 import { generateErrors } from "../app/utils/generateErrors";
 
 const initialState = localStorageService.getAccessToken()
-? {
-    data: null,
-    isLoading: true,
-    error: null,
-    auth: { userId: localStorageService.getParticipantId() },
-    isOnline: true,
-    dataLoaded: false
-} : {
-    data: null,
-    isLoading: false,
-    error: null,
-    auth: null,
-    isOnline: false,
-    dataLoaded: false
-};
+  ? {
+      data: null,
+      isLoading: true,
+      error: null,
+      auth: { userId: localStorageService.getParticipantId() },
+      isOnline: true,
+      dataLoaded: false
+    }
+  : {
+      data: null,
+      isLoading: false,
+      error: null,
+      auth: null,
+      isOnline: false,
+      dataLoaded: false
+    };
 
 const participantsSlice = createSlice({
   name: "participants",
@@ -32,6 +33,14 @@ const participantsSlice = createSlice({
       state.data = action.payload;
       state.isLoading = false;
       state.dataLoaded = true;
+
+      if (!localStorage.getItem("favorites")) {
+        localStorageService.setFavorites(
+          action.payload.map((obj) => {
+            return { ...obj, isFavorite: false };
+          })
+        );
+      }
     },
     participantsRequestedFailed: (state, action) => {
       state.error = action.payload;
@@ -42,10 +51,10 @@ const participantsSlice = createSlice({
       state.isOnline = true;
     },
     participantCreatedRequestSuccess: (state, action) => {
-       if (!Array.isArray(state.data)) {
+      if (!Array.isArray(state.data)) {
         state.data = [];
       }
-        state.data.push(action.payload);
+      state.data.push(action.payload);
     }
   }
 });
@@ -62,7 +71,9 @@ const {
 const authRequested = createAction("participants/authRequest");
 const authRequestFailed = createAction("participants/authRequestFailed");
 const participantCreatedRequest = createAction("participants/createdRequest");
-const participantCreatedRequestFailed = createAction("participants/createdRequestFailed");
+const participantCreatedRequestFailed = createAction(
+  "participants/createdRequestFailed"
+);
 
 export const loadParticipantsList = () => async (dispatch) => {
   dispatch(participantsRequested());
@@ -74,52 +85,47 @@ export const loadParticipantsList = () => async (dispatch) => {
   }
 };
 
-export const signUp = ({
-  email,
-  password,
-  ...rest 
-}) => async (dispatch) => {
+export const signUp =
+  ({ email, password, ...rest }) =>
+  async (dispatch) => {
     dispatch(authRequested());
     try {
       const dataContent = await authService.register({ email, password });
       localStorageService.setAuthTokens(dataContent);
       dispatch(authRequestedSuccess({ userId: dataContent.localId }));
-      dispatch(createParticipant({
-      id: dataContent.localId,
-      email,
-      ...rest
-    }));
-  } catch (error) {
-    const { code, message } = error.response.data.error;
-    if (code === 400) {
-    const errorMessage = generateErrors(message);
-    dispatch(authRequestFailed(errorMessage));
+      dispatch(
+        createParticipant({
+          id: dataContent.localId,
+          email,
+          ...rest
+        })
+      );
+    } catch (error) {
+      const { code, message } = error.response.data.error;
+      if (code === 400) {
+        const errorMessage = generateErrors(message);
+        dispatch(authRequestFailed(errorMessage));
+      }
     }
-  }
-};
+  };
 
-export const createParticipant = ({
-    HTML,
-    CSS,
-    JavaScript,
-    facebook,
-    vk,
-    telegram,
-    ...rest}) => async (dispatch) => {
-  dispatch(participantCreatedRequest());
-  try {
-    const dataContent = await participantService.create({
-      technologies: [HTML, CSS, JavaScript],
-      social_networks: [facebook, vk, telegram],
-      ...rest
-    });
-    dispatch(participantCreatedRequestSuccess(dataContent));
-  } catch (error) {
-    dispatch(participantCreatedRequestFailed(error.message));
-  }
-};
+export const createParticipant =
+  ({ HTML, CSS, JavaScript, facebook, vk, telegram, ...rest }) =>
+  async (dispatch) => {
+    dispatch(participantCreatedRequest());
+    try {
+      const dataContent = await participantService.create({
+        technologies: [HTML, CSS, JavaScript],
+        social_networks: [facebook, vk, telegram],
+        ...rest
+      });
+      dispatch(participantCreatedRequestSuccess(dataContent));
+    } catch (error) {
+      dispatch(participantCreatedRequestFailed(error.message));
+    }
+  };
 
-export const logIn = ( payload ) => async (dispatch) => {
+export const logIn = (payload) => async (dispatch) => {
   dispatch(authRequested());
   const { email, password } = payload;
   try {
@@ -130,8 +136,8 @@ export const logIn = ( payload ) => async (dispatch) => {
     console.log("error", error);
     const { code, message } = error.response.data.error;
     if (code === 400) {
-    const errorMessage = generateErrors(message);
-    dispatch(authRequestFailed(errorMessage));
+      const errorMessage = generateErrors(message);
+      dispatch(authRequestFailed(errorMessage));
     }
   }
 };
@@ -139,6 +145,7 @@ export const logIn = ( payload ) => async (dispatch) => {
 export const getIsLoadingStatus = () => (state) => state.participants.isLoading;
 
 export const getParticipants = () => (state) => state.participants.data;
-export const getDataLoadedStatus = () => (state) => state.participants.dataLoaded;
+export const getDataLoadedStatus = () => (state) =>
+  state.participants.dataLoaded;
 
 export default participantsReducer;
