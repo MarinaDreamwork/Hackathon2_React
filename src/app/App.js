@@ -17,7 +17,7 @@ const App = () => {
   const isLoadingTech = useSelector(getIsLoadingStatus());
 
   useEffect(() => {
-    if (!isLoadingData && !isLoadingKeySkills && !isLoadingTech) {
+    if (!isLoadingData && !isLoadingKeySkills &&!isLoadingTech) {
       dispatch(loadParticipantsList());
       dispatch(loadKeySkillsList());
       dispatch(loadTechnologiesList());

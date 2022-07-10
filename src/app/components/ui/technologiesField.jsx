@@ -1,8 +1,8 @@
 import React from "react";
-import { useTechnologies } from "../../hooks/technologies";
 import TextField from "../common/form/textField";
 import PropTypes from "prop-types";
 import Badge from "../common/badge";
+import { getTechnologies } from "../../../store/technologies";
 
 const TechnologiesFields = ({
     label,
@@ -12,7 +12,7 @@ const TechnologiesFields = ({
     onFieldChange,
     error 
 }) => {
-  const { technologies } = useTechnologies();
+  const technologies = dispatch(getTechnologies());
   return ( 
     <div>
     {

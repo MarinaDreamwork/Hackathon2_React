@@ -1,24 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FileInput from "../common/form/fileInput";
 import CheckboxField from "../common/form/checkboxField";
 import TextArea from "../common/form/textArea";
 import TextField from "../common/form/textField";
-import RangeArea from "../common/form/rangeArea";
-import { useTechnologies } from "../../hooks/technologies";
-import TechnologiesFields from "./technologiesField";
-import SocialNetworkGroup from "./socialNetworkGroupField";
 import { useHistory } from "react-router-dom";
 import Button from "../common/button";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../../store/participants";
 import { getKeySkills } from "../../../store/keySkills";
-import TechnologiesGroup from "../common/form/GroupFields";
+import GroupFields from "../common/form/GroupFields";
+import { getIsLoadingTechStatus, getTechnologies, loadTechnologiesList } from "../../../store/technologies";
 import { useSocialNetwork } from "../../hooks/socialNetwork";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const keySkillsList = useSelector(getKeySkills());
-  const { technologies } = useTechnologies();
+  const isTechLoading = useSelector(getIsLoadingTechStatus());
+  //const technologies  = dispatch(getTechnologies());
   const { socialNetworks } = useSocialNetwork();
   console.log("keySkills", keySkillsList);
   const [data, setData] = useState({
@@ -87,9 +85,23 @@ const RegisterForm = () => {
     e.preventDefault();
     // здесь регистрация пользователя / отправка данных на сервер / там внутри - получение current user / переход на главную страницу 
     console.log("data", data);
-    dispatch(signUp(data));
+    dispatch(signUp({
+      ...data 
+    }));
     history.push("/");
   };
+
+  useEffect(() => {
+    dispatch(loadTechnologiesList());
+  }, []);
+
+  if(isTechLoading) {
+    return (
+      <div className="spinner-border text-secondary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    );
+  } else {
 
   return ( 
     <form onSubmit={handleRegister}>
@@ -160,14 +172,14 @@ const RegisterForm = () => {
         onFieldChange={handleChange}
         error={errors.HTML}
       /> */}
-      <TechnologiesGroup
+      {/* <GroupFields
         items={technologies}
         label="Введите знания технологий в %:"
         type="number"
         value={data[name]}
         onFieldChange={handleGroupFieldsChange}
-        />
-      <TechnologiesGroup
+        /> */}
+      <GroupFields
         items={socialNetworks}
         label="Введите Ваши социальные сети (при наличии):"
         type="text"
@@ -195,6 +207,7 @@ const RegisterForm = () => {
       </div>
     </form>
   );
+  }
 };
  
 export default RegisterForm;
