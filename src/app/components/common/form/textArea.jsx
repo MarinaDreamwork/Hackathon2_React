@@ -1,14 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import SmallStyleWrapper from "../smallStyleWrapper";
+import React from 'react';
+import PropTypes from 'prop-types';
+import SmallStyleWrapper from '../smallStyleWrapper';
 
 const TextArea = ({ label, onFieldChange, name, value }) => {
   return (
     <SmallStyleWrapper>
-      <label
-        htmlFor="exampleFormControlTextarea1"
-        className="form-label">
-          {label}
+      <label htmlFor="exampleFormControlTextarea1" className="form-label">
+        {label}
       </label>
       <textarea
         value={value}
@@ -28,5 +26,5 @@ TextArea.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired
 };
- 
+
 export default TextArea;
