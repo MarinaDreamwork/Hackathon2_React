@@ -12,7 +12,7 @@ const Button = ({ style, color, name, ...rest }) => {
 Button.propTypes = {
   style: PropTypes.string,
   color: PropTypes.string,
-  name: PropTypes.string,
+  name: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 };
 
 export default Button;

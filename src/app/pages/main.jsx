@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import {
   getIsLoadingStatus,
   getParticipants,
-  loadParticipantsList,
+  loadParticipantsList
 } from "../../store/participants";
+import ParticipantsList from "../components/ui/participantsList";
 
 const Main = () => {
   const isLoading = useSelector(getIsLoadingStatus());
@@ -13,6 +14,7 @@ const Main = () => {
   return (
     <>
       <h2 className="text-center">Главная страница</h2>
+      <ParticipantsList />
     </>
   );
 };
