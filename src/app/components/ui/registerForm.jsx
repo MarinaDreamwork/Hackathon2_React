@@ -9,12 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../../store/participants";
 import { getKeySkills } from "../../../store/keySkills";
 import GroupFields from "../common/form/GroupFields";
-import { getIsLoadingTechStatus, getTechnologies, loadTechnologiesList } from "../../../store/technologies";
+import { getIsLoadingTechStatus } from "../../../store/technologies";
 import { useSocialNetwork } from "../../hooks/socialNetwork";
+import { getTechnologies } from "../../../store/technologies";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const keySkillsList = useSelector(getKeySkills());
+  const technologies = useSelector(getTechnologies());
+  console.log("technologies", technologies);
+  console.log(keySkillsList);
   const isTechLoading = useSelector(getIsLoadingTechStatus());
   //const technologies  = dispatch(getTechnologies());
   const { socialNetworks } = useSocialNetwork();
@@ -90,10 +94,6 @@ const RegisterForm = () => {
     }));
     history.push("/");
   };
-
-  useEffect(() => {
-    dispatch(loadTechnologiesList());
-  }, []);
 
   if(isTechLoading) {
     return (
@@ -172,13 +172,13 @@ const RegisterForm = () => {
         onFieldChange={handleChange}
         error={errors.HTML}
       /> */}
-      {/* <GroupFields
+      <GroupFields
         items={technologies}
         label="Введите знания технологий в %:"
         type="number"
         value={data[name]}
         onFieldChange={handleGroupFieldsChange}
-        /> */}
+        />
       <GroupFields
         items={socialNetworks}
         label="Введите Ваши социальные сети (при наличии):"
@@ -201,8 +201,8 @@ const RegisterForm = () => {
         type="text"
         error={errors.social_networks}
       /> */}
-      <div className="d-flex">
-        <Button color="secondary m-auto" name="Зарегистрироваться">
+      <div className="d-flex justify-content-center">
+        <Button color="secondary" style="m-3" name="Зарегистрироваться">
         </Button>
       </div>
     </form>
