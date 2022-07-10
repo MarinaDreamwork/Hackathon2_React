@@ -27,6 +27,7 @@ module.exports = {
                 allowTemplateLiterals: true,
                 avoidEscape: true
             }
-        ]
+        ],
+        "no-undef": ["error", { "typeof": true }]
     }
 };

@@ -34,3 +34,18 @@ code {
   padding: 0 0 0 100px;
   max-width: 300px;
 }
+
+.breadCrumbBlock {
+  margin: 15px ;
+  color: black;
+}
+.breadCrumbBlock a {
+  color: black;
+  text-decoration: none;
+}
+.breadCrumbBlock a:hover {
+  text-decoration: underline;
+}
+.no-last {
+  opacity: 0.5;
+}

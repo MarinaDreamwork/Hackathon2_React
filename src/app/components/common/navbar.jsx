@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { MAIN_ROUTE, FAVORITES_ROUTE } from "../../utils/constants";
 
 const Navbar = () => {
@@ -36,6 +35,7 @@ const Navbar = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav">
+            {/* если тут тоже сделать map? */}
             <li className="nav-item">
               <Link to={MAIN_ROUTE} className="nav-link">
                 Главная
@@ -44,6 +44,11 @@ const Navbar = () => {
             <li className="nav-item">
               <Link to={FAVORITES_ROUTE} className="nav-link">
                 Избранное
+              </Link>
+            </li>
+              <li className="nav-item">
+              <Link to="login" className="nav-link">
+                Login/Register
               </Link>
             </li>
           </ul>
