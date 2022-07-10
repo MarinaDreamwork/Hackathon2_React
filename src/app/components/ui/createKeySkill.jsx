@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import Button from "../common/button";
-import TextField from "../common/form/textField";
+import React, { useState } from 'react';
+import Button from '../common/button';
+import TextField from '../common/form/textField';
 
 const CreateKeySill = () => {
   const [data, setData] = useState({
-    id: "",
-    name: ""
+    id: '',
+    name: ''
   });
 
   const handleChange = ({ target }) => {
-    setData(prevState=> ({
+    setData((prevState) => ({
       ...prevState,
       [target.name]: target.value
     }));
@@ -17,10 +17,9 @@ const CreateKeySill = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
   };
 
-  return ( 
+  return (
     <form onSubmit={handleSubmit}>
       <h3>Создать ключевой навык:</h3>
       <TextField
@@ -37,12 +36,9 @@ const CreateKeySill = () => {
         value={data.name}
         onFieldChange={handleChange}
       />
-      <Button
-        color="warning"
-        name="Создать ключевое качество:"
-      />
+      <Button color="warning" name="Создать ключевое качество:" />
     </form>
-   );
+  );
 };
- 
+
 export default CreateKeySill;

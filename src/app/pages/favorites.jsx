@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Favorites = () => {
   return <h2 className="text-center">Избранное</h2>;

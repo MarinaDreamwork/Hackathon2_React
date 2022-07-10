@@ -1,9 +1,9 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
-import { generateErrors } from "../app/utils/generateErrors";
-import technologyService from "../services/technology.service";
+import { createAction, createSlice } from '@reduxjs/toolkit';
+import { generateErrors } from '../app/utils/generateErrors';
+import technologyService from '../services/technology.service';
 
 const technologiesSlice = createSlice({
-  name: "technologies",
+  name: 'technologies',
   initialState: {
     data: null,
     isLoading: false,
@@ -22,10 +22,10 @@ const technologiesSlice = createSlice({
       state.isLoading = false;
     },
     technologyCreatedRequestSuccess: (state, action) => {
-       if (!Array.isArray(state.data)) {
+      if (!Array.isArray(state.data)) {
         state.data = [];
       }
-        state.data.push(action.payload);
+      state.data.push(action.payload);
     }
   }
 });
@@ -38,8 +38,10 @@ const {
   technologyCreatedRequestSuccess
 } = actions;
 
-const technologyCreatedRequest = createAction("technologies/createdRequest");
-const technologyCreatedRequestFailed = createAction("technologies/createdRequestFailed");
+const technologyCreatedRequest = createAction('technologies/createdRequest');
+const technologyCreatedRequestFailed = createAction(
+  'technologies/createdRequestFailed'
+);
 
 export const loadTechnologiesList = () => async (dispatch) => {
   dispatch(technologiesRequested());
@@ -61,7 +63,8 @@ export const createTechnology = (payload) => async (dispatch) => {
   }
 };
 
-export const getIsLoadingTechStatus = () => (state) => state.technologies.isLoading;
+export const getIsLoadingTechStatus = () => (state) =>
+  state.technologies.isLoading;
 
 export const getTechnologies = () => (state) => state.technologies.data;
 

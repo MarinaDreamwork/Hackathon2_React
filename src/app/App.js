@@ -1,15 +1,19 @@
-import React, { useEffect } from "react";
-import AppRouter from "./components/AppRouter";
-import Navbar from "./components/common/navbar";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import AppRouter from './components/AppRouter';
+import Navbar from './components/common/navbar';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getDataLoadedStatus,
   getParticipants,
-  loadParticipantsList,
-} from "../store/participants";
-import BreadCrumb from "./components/common/breadcrumbs";
-import { getIsLoadingStatus, loadKeySkillsList } from "../store/keySkills";
-import { getIsLoadingTechStatus, getTechnologies, loadTechnologiesList } from "../store/technologies";
+  loadParticipantsList
+} from '../store/participants';
+import BreadCrumb from './components/common/breadcrumbs';
+import { getIsLoadingStatus, loadKeySkillsList } from '../store/keySkills';
+import {
+  getIsLoadingTechStatus,
+  getTechnologies,
+  loadTechnologiesList
+} from '../store/technologies';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,7 +24,7 @@ const App = () => {
   const participants = useSelector(getParticipants());
 
   useEffect(() => {
-    if (!isLoadingData && !isLoadingKeySkills &&!isLoadingTech) {
+    if (!isLoadingData && !isLoadingKeySkills && !isLoadingTech) {
       dispatch(loadParticipantsList());
       dispatch(loadKeySkillsList());
       dispatch(loadTechnologiesList());

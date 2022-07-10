@@ -1,24 +1,24 @@
-import React from "react";
-import Badge from "./badge";
-import Button from "./button";
+import React from 'react';
+import Badge from './badge';
+import Button from './button';
 
 const Slider = () => {
-  const slides = document.querySelectorAll(".slide");
+  const slides = document.querySelectorAll('.slide');
   function clearActiveClasses() {
     slides.forEach((slide) => {
-      slide.classList.remove("active");
+      slide.classList.remove('active');
     });
   }
   const toggleActive = () => {
     for (const slide of slides) {
-      slide.addEventListener("click", () => {
+      slide.addEventListener('click', () => {
         clearActiveClasses();
 
-        slide.classList.add("active");
+        slide.classList.add('active');
       });
     }
   };
-  const bookmark = () => console.log("bookmark");
+  const bookmark = () => console.log('bookmark');
   return (
     <div className="main_wrapper">
       <div className="slider_wrapper">
@@ -45,7 +45,7 @@ const Slider = () => {
           />
         </div>
         <div className="slide" onClick={toggleActive}>
-          {" "}
+          {' '}
           <div className="active-flex">
             <div className="img"></div>
             <div className="description">
@@ -90,7 +90,7 @@ const Slider = () => {
           />
         </div>
         <div className="slide" onClick={toggleActive}>
-          {" "}
+          {' '}
           <div className="active-flex">
             <div className="img"></div>
             <div className="description">
@@ -113,7 +113,7 @@ const Slider = () => {
           />
         </div>
         <div className="slide" onClick={toggleActive}>
-          {" "}
+          {' '}
           <div className="active-flex">
             <div className="img"></div>
             <div className="description">

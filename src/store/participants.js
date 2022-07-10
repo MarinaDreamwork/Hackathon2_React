@@ -1,28 +1,29 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
-import authService from "../services/auth.service";
-import { localStorageService } from "../services/localStorage.service";
-import participantService from "../services/participant.service";
-import { generateErrors } from "../app/utils/generateErrors";
+import { createAction, createSlice } from '@reduxjs/toolkit';
+import authService from '../services/auth.service';
+import { localStorageService } from '../services/localStorage.service';
+import participantService from '../services/participant.service';
+import { generateErrors } from '../app/utils/generateErrors';
 
 const initialState = localStorageService.getAccessToken()
-? {
-    data: null,
-    isLoading: true,
-    error: null,
-    auth: { userId: localStorageService.getParticipantId() },
-    isOnline: true,
-    dataLoaded: false
-} : {
-    data: null,
-    isLoading: false,
-    error: null,
-    auth: null,
-    isOnline: false,
-    dataLoaded: false
-};
+  ? {
+      data: null,
+      isLoading: true,
+      error: null,
+      auth: { userId: localStorageService.getParticipantId() },
+      isOnline: true,
+      dataLoaded: false
+    }
+  : {
+      data: null,
+      isLoading: false,
+      error: null,
+      auth: null,
+      isOnline: false,
+      dataLoaded: false
+    };
 
 const participantsSlice = createSlice({
-  name: "participants",
+  name: 'participants',
   initialState,
   reducers: {
     participantsRequested: (state) => {
@@ -42,10 +43,10 @@ const participantsSlice = createSlice({
       state.isOnline = true;
     },
     participantCreatedRequestSuccess: (state, action) => {
-       if (!Array.isArray(state.data)) {
+      if (!Array.isArray(state.data)) {
         state.data = [];
       }
-        state.data.push(action.payload);
+      state.data.push(action.payload);
     }
   }
 });
@@ -59,10 +60,12 @@ const {
   participantCreatedRequestSuccess
 } = actions;
 
-const authRequested = createAction("participants/authRequest");
-const authRequestFailed = createAction("participants/authRequestFailed");
-const participantCreatedRequest = createAction("participants/createdRequest");
-const participantCreatedRequestFailed = createAction("participants/createdRequestFailed");
+const authRequested = createAction('participants/authRequest');
+const authRequestFailed = createAction('participants/authRequestFailed');
+const participantCreatedRequest = createAction('participants/createdRequest');
+const participantCreatedRequestFailed = createAction(
+  'participants/createdRequestFailed'
+);
 
 export const loadParticipantsList = () => async (dispatch) => {
   dispatch(participantsRequested());
@@ -74,52 +77,47 @@ export const loadParticipantsList = () => async (dispatch) => {
   }
 };
 
-export const signUp = ({
-  email,
-  password,
-  ...rest 
-}) => async (dispatch) => {
+export const signUp =
+  ({ email, password, ...rest }) =>
+  async (dispatch) => {
     dispatch(authRequested());
     try {
       const dataContent = await authService.register({ email, password });
       localStorageService.setAuthTokens(dataContent);
       dispatch(authRequestedSuccess({ userId: dataContent.localId }));
-      dispatch(createParticipant({
-      id: dataContent.localId,
-      email,
-      ...rest
-    }));
-  } catch (error) {
-    const { code, message } = error.response.data.error;
-    if (code === 400) {
-    const errorMessage = generateErrors(message);
-    dispatch(authRequestFailed(errorMessage));
+      dispatch(
+        createParticipant({
+          id: dataContent.localId,
+          email,
+          ...rest
+        })
+      );
+    } catch (error) {
+      const { code, message } = error.response.data.error;
+      if (code === 400) {
+        const errorMessage = generateErrors(message);
+        dispatch(authRequestFailed(errorMessage));
+      }
     }
-  }
-};
+  };
 
-export const createParticipant = ({
-    HTML,
-    CSS,
-    JavaScript,
-    facebook,
-    vk,
-    telegram,
-    ...rest}) => async (dispatch) => {
-  dispatch(participantCreatedRequest());
-  try {
-    const dataContent = await participantService.create({
-      technologies: [HTML, CSS, JavaScript],
-      social_networks: [facebook, vk, telegram],
-      ...rest
-    });
-    dispatch(participantCreatedRequestSuccess(dataContent));
-  } catch (error) {
-    dispatch(participantCreatedRequestFailed(error.message));
-  }
-};
+export const createParticipant =
+  ({ HTML, CSS, JavaScript, facebook, vk, telegram, ...rest }) =>
+  async (dispatch) => {
+    dispatch(participantCreatedRequest());
+    try {
+      const dataContent = await participantService.create({
+        technologies: [HTML, CSS, JavaScript],
+        social_networks: [facebook, vk, telegram],
+        ...rest
+      });
+      dispatch(participantCreatedRequestSuccess(dataContent));
+    } catch (error) {
+      dispatch(participantCreatedRequestFailed(error.message));
+    }
+  };
 
-export const logIn = ( payload ) => async (dispatch) => {
+export const logIn = (payload) => async (dispatch) => {
   dispatch(authRequested());
   const { email, password } = payload;
   try {
@@ -127,11 +125,11 @@ export const logIn = ( payload ) => async (dispatch) => {
     dispatch(authRequestedSuccess({ userId: dataContent.localId }));
     localStorageService.setAuthTokens(dataContent);
   } catch (error) {
-    console.log("error", error);
+    console.log('error', error);
     const { code, message } = error.response.data.error;
     if (code === 400) {
-    const errorMessage = generateErrors(message);
-    dispatch(authRequestFailed(errorMessage));
+      const errorMessage = generateErrors(message);
+      dispatch(authRequestFailed(errorMessage));
     }
   }
 };
@@ -139,6 +137,7 @@ export const logIn = ( payload ) => async (dispatch) => {
 export const getIsLoadingStatus = () => (state) => state.participants.isLoading;
 
 export const getParticipants = () => (state) => state.participants.data;
-export const getDataLoadedStatus = () => (state) => state.participants.dataLoaded;
+export const getDataLoadedStatus = () => (state) =>
+  state.participants.dataLoaded;
 
 export default participantsReducer;

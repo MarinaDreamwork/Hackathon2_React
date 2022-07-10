@@ -1,12 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const SmallStyleWrapper = ({ children }) => {
-  return ( 
+  return (
     <div className="row">
-      <div className="mb-3">
-      { children }
-      </div>
+      <div className="mb-3">{children}</div>
     </div>
   );
 };
@@ -17,5 +15,5 @@ SmallStyleWrapper.propTypes = {
     PropTypes.arrayOf(PropTypes.node)
   ])
 };
- 
+
 export default SmallStyleWrapper;

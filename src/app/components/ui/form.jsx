@@ -1,16 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+// import React from 'react';
+// import PropTypes from 'prop-types';
 
 // const Form = ({ children }) => (handleSubmit) => {
-//   return ( 
+//   return (
 //     <form>
 
 //     </form>
 //   );
 // };
 
-Form.propTypes = {
+// Form.propTypes = {};
 
-};
- 
-export default Form;
+// export default Form;

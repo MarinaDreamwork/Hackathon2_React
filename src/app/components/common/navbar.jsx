@@ -1,7 +1,7 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { MAIN_ROUTE, FAVORITES_ROUTE } from "../../utils/constants";
+import React from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { MAIN_ROUTE, FAVORITES_ROUTE } from '../../utils/constants';
 
 const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
@@ -31,7 +31,7 @@ const Navbar = () => {
         </button>
         {/* collapse block */}
         <div
-          className={`collapse navbar-collapse ${isOpen ? "show" : "hide"}`}
+          className={`collapse navbar-collapse ${isOpen ? 'show' : 'hide'}`}
           id="navbarNav"
         >
           <ul className="navbar-nav">
@@ -46,7 +46,7 @@ const Navbar = () => {
                 Избранное
               </Link>
             </li>
-              <li className="nav-item">
+            <li className="nav-item">
               <Link to="login" className="nav-link">
                 Login/Register
               </Link>

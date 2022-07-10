@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import SmallStyleWrapper from "../smallStyleWrapper";
-
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import SmallStyleWrapper from '../smallStyleWrapper';
 
 const FileInput = ({ label, type, name, onFieldChange }) => {
-  
-  return ( 
-      <SmallStyleWrapper>
-      <label htmlFor="fileUpload" className="form-label">{label}</label>
+  return (
+    <SmallStyleWrapper>
+      <label htmlFor="fileUpload" className="form-label">
+        {label}
+      </label>
       <input
         type={type}
         name={name}
@@ -28,5 +28,5 @@ FileInput.propTypes = {
   label: PropTypes.string.isRequired,
   onFieldChange: PropTypes.func.isRequired
 };
- 
+
 export default FileInput;
