@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import SmallStyleWrapper from "../smallStyleWrapper";
 
 const TextArea = ({ label, onFieldChange, name, value }) => {
   return (
-    <div className="mb-3">
+    <SmallStyleWrapper>
       <label
         htmlFor="exampleFormControlTextarea1"
         className="form-label">
@@ -12,12 +13,12 @@ const TextArea = ({ label, onFieldChange, name, value }) => {
       <textarea
         value={value}
         name={name}
-        className="form-control"
+        className="form-control shadow"
         id="exampleFormControlTextarea1"
         rows="3"
         onChange={onFieldChange}
       />
-    </div>
+    </SmallStyleWrapper>
   );
 };
 

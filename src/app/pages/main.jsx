@@ -26,18 +26,12 @@ const Main = () => {
     };
 
   return (
-  <div>
+  <>
       <h2 className="text-center">Главная страница</h2>
-      <Tilt className='tilt'>
-  <div>
-    You can put whatever you want inside this
-  </div>
-</Tilt>
-      {
-        test.map(i => <Progress changeSelect = {changeSelect} key={i.id} bgColor={i.bgColor} completed={i.completed} label={i.label} type={i.type}/>)
-      }
-  </div>
-  ) ;
+     {/* {!isLoading &&
+      participants.map((p, i) => <p key={i}>{p.name}</p>)} */}
+    </>
+  );
 };
 
 export default Main;

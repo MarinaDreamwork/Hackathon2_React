@@ -1,7 +1,7 @@
 import axios from "axios";
 import configuration from "../../src/app/config.json";
-//import authService from "./auth.service";
-//import localStorageService from "./localStorage.service";
+import authService from "./auth.service";
+import { localStorageService } from "./localStorage.service";
 
 const http = axios.create({
   baseURL: configuration.apiEndPoint
@@ -12,24 +12,24 @@ http.interceptors.request.use(
     if(configuration.isFirebase) {
       const containSlash = /\/$/gi.test(config.url);
       config.url = (containSlash ? (config.url.slice(0, -1) + ".json") : config.url + ".json");
-      // const expiresDate = localStorageService.getTokenExpiresDate();
-      // const refreshToken = localStorageService.getRefreshToken();
-      // if (refreshToken && expiresDate < Date.now()) {
-      //   const data = await authService.refresh();
-      //   localStorageService.setTokens({
-      //     refreshToken: data.refresh_token,
-      //     idToken: data.id_token,
-      //     localId: data.user_id,
-      //     expiresIn: data.expires_in
-      //   });
-      //}
-     // const accessToken = localStorageService.getAccessToken();
-      // if (accessToken) {
-      //   config.params = {
-      //     ...config.params,
-      //     auth: accessToken
-      //   };
-      // }
+      const expiresDate = localStorageService.getTokenExpiresDate();
+      const refreshToken = localStorageService.getRefreshToken();
+      if (refreshToken && expiresDate < Date.now()) {
+        const data = await authService.refresh();
+        localStorageService.setAuthTokens({
+          refreshToken: data.refresh_token,
+          idToken: data.id_token,
+          localId: data.user_id,
+          expiresIn: data.expires_in
+        });
+      }
+     const accessToken = localStorageService.getAccessToken();
+      if (accessToken) {
+        config.params = {
+          ...config.params,
+          auth: accessToken
+        };
+      }
     }
     return config;
   }, function (error) {

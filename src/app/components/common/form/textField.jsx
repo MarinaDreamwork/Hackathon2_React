@@ -1,9 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import SmallStyleWrapper from "../smallStyleWrapper";
 
-const TextField = ({ label, type, name, value, onFieldChange, error }) => {
+const TextField = ({
+    label,
+    type,
+    name,
+    value,
+    onFieldChange,
+    error
+}) => {
   return ( 
-    <div className="mb-3">
+    <SmallStyleWrapper>
       <label
         htmlFor="exampleFormControlInput1"
         className="form-label">
@@ -13,7 +21,7 @@ const TextField = ({ label, type, name, value, onFieldChange, error }) => {
         name={name}
         type={type}
         value={value}
-        className="form-control"
+        className="form-control shadow"
         id="exampleFormControlInput1"
         placeholder={type !== "number" ? name : "0"}
         onChange={onFieldChange}
@@ -22,7 +30,7 @@ const TextField = ({ label, type, name, value, onFieldChange, error }) => {
       {
         error && <p className="invalid-feedback">{error}</p>
       }
-    </div>
+    </SmallStyleWrapper>
   );
 };
 

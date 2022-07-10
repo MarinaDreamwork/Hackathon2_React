@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import SmallStyleWrapper from "../smallStyleWrapper";
 
-const FileInput = ({ type, name, onFieldChange }) => {
+const FileInput = ({ label, type, name, onFieldChange }) => {
   return ( 
-    <div className="input-group">
+      <SmallStyleWrapper>
+      <label htmlFor="fileUpload" className="form-label">{label}</label>
       <input
         type={type}
         name={name}
@@ -13,7 +15,7 @@ const FileInput = ({ type, name, onFieldChange }) => {
         aria-describedby="inputGroupFileAddon04"
         aria-label="Upload"
       />
-    </div>
+    </SmallStyleWrapper>
   );
 };
 
@@ -21,6 +23,7 @@ FileInput.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   onFieldChange: PropTypes.func.isRequired
 };
  

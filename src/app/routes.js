@@ -6,6 +6,7 @@ import {
   MAIN_ROUTE,
   USER_PAGE_ROUTE,
   FAVORITES_ROUTE,
+  LOGIN_ROUTE,
 } from "./utils/constants";
 import Login from "./pages/login";
 
@@ -23,7 +24,7 @@ export const Routes = [
     Component: Favorites,
   },
   {
-    path: "/login",
+    path: LOGIN_ROUTE,
     Component: Login,
   }
 ];

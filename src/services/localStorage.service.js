@@ -1,10 +1,10 @@
 const FIREBASE_TOKEN = "jwt-token";
 const FIREBASE_REFRESH_TOKEN = "jwt-refreshToken";
-const FIREBASE_EXPIRES_DATE_TOKEN = "jwt-expires-date-";
+const FIREBASE_EXPIRES_DATE_TOKEN = "jwt-expires-date";
 const FIREBASE_PARTICIPANT_ID = "paricipant-id";
 const FAVORITES_LOCAL = "favorites";
 
-function setTokens({
+function setAuthTokens({
   expiresIn = 3600,
   idToken,
   localId,
@@ -25,11 +25,7 @@ function getFavorites() {
   JSON.parse(localStorage.getItem(FAVORITES_LOCAL));
 };
 
-function setExampleData() {
-  localStorage.setItem(FIREBASE_PARTICIPANT_ID, "hzsaKisKHEXQDbXzwrjZr65deqx1");
-};
-
-function getUserId() {
+function getParticipantId() {
   return localStorage.getItem(FIREBASE_PARTICIPANT_ID);
 };
 
@@ -53,13 +49,12 @@ function removeAuthData() {
 };
 
 export const localStorageService = {
-  getUserId,
-  setTokens,
+  getParticipantId,
+  setAuthTokens,
   getAccessToken,
   getRefreshToken,
   getTokenExpiresDate,
   removeAuthData,
   setFavorites,
-  getFavorites,
-  setExampleData
+  getFavorites
 };
