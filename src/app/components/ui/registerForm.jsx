@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import FileInput from "../common/form/fileInput";
 import CheckboxField from "../common/form/checkboxField";
 import TextArea from "../common/form/textArea";
@@ -12,6 +12,7 @@ import GroupFields from "../common/form/GroupFields";
 import { getIsLoadingTechStatus } from "../../../store/technologies";
 import { useSocialNetwork } from "../../hooks/socialNetwork";
 import { getTechnologies } from "../../../store/technologies";
+import Preloader from "../common/preloader";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const RegisterForm = () => {
     telegram: ""
   });
   const [errors, setErrors] = useState({});
+  
   const history = useHistory();
 
   const handleChange = ({ target }) => {
@@ -96,11 +98,7 @@ const RegisterForm = () => {
   };
 
   if(isTechLoading) {
-    return (
-      <div className="spinner-border text-secondary" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-    );
+    return <Preloader style="text-secondary" text="Данные загружаются для вас..." />;
   } else {
 
   return ( 
@@ -186,21 +184,6 @@ const RegisterForm = () => {
         value={data[name]}
         onFieldChange={handleGroupFieldsChange}
         />
-     {/* <TechnologiesFields
-        label="Выберете от 0 до 100 ваше знание технологии:"
-        value={data.technologies}
-        name="technologies"
-        type="number"
-        onFieldChange={handleRangeChange}
-        error={errors.technologies}/>
-      <SocialNetworkGroup
-        label="Социальные сети:"
-        onFieldChange={handleSocialGroupChange}
-        name="social_networks"
-        value={data.social_networks}
-        type="text"
-        error={errors.social_networks}
-      /> */}
       <div className="d-flex justify-content-center">
         <Button color="secondary" style="m-3" name="Зарегистрироваться">
         </Button>

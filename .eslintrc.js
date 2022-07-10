@@ -28,6 +28,6 @@ module.exports = {
                 avoidEscape: true
             }
         ],
-        // "no-undef": ["error", { "typeof": true }]
+        "no-undef": ["error", { "typeof": true }]
     }
 };

@@ -13,8 +13,6 @@ const Main = () => {
   return (
     <>
       <h2 className="text-center">Главная страница</h2>
-     {/* {!isLoading &&
-      participants.map((p, i) => <p key={i}>{p.name}</p>)} */}
     </>
   );
 };

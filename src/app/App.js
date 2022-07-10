@@ -4,6 +4,7 @@ import Navbar from "./components/common/navbar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDataLoadedStatus,
+  getParticipants,
   loadParticipantsList,
 } from "../store/participants";
 import BreadCrumb from "./components/common/breadcrumbs";
@@ -15,6 +16,8 @@ const App = () => {
   const isLoadingData = useSelector(getDataLoadedStatus());
   const isLoadingKeySkills = useSelector(getIsLoadingStatus());
   const isLoadingTech = useSelector(getIsLoadingStatus());
+
+  const participants = useSelector(getParticipants());
 
   useEffect(() => {
     if (!isLoadingData && !isLoadingKeySkills &&!isLoadingTech) {
@@ -29,6 +32,13 @@ const App = () => {
       <Navbar />
       <BreadCrumb />
       <AppRouter />
+      {/* {
+        participants.map( i => (
+          <div key={i.id}>
+            <p>{i.name}</p>
+          </div>
+        ))
+      } */}
     </>
   );
 };
