@@ -8,16 +8,19 @@ import {
 } from "../store/participants";
 import BreadCrumb from "./components/common/breadcrumbs";
 import { getIsLoadingStatus, loadKeySkillsList } from "../store/keySkills";
+import { getIsLoadingTechStatus, getTechnologies, loadTechnologiesList } from "../store/technologies";
 
 const App = () => {
   const dispatch = useDispatch();
   const isLoadingData = useSelector(getDataLoadedStatus());
   const isLoadingKeySkills = useSelector(getIsLoadingStatus());
+  const isLoadingTech = useSelector(getIsLoadingStatus());
 
   useEffect(() => {
-    if (!isLoadingData && !isLoadingKeySkills) {
+    if (!isLoadingData && !isLoadingKeySkills && !isLoadingTech) {
       dispatch(loadParticipantsList());
       dispatch(loadKeySkillsList());
+      dispatch(loadTechnologiesList());
     }
   }, []);
 

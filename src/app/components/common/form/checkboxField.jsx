@@ -8,8 +8,8 @@ const CheckboxField = ({ label, value, onFieldChange, type }) => {
   console.log("keySkills", keySkills);
 
   return ( 
-    <div className="mt-3">
-    <label>{label}</label>
+    <div className="mt-3 border rounded p-2 shadow">
+    <label className="d-flex justify-content-center">{label}</label>
     {
       keySkills.map((item, index) => (
         <div

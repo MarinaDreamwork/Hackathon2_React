@@ -98,10 +98,21 @@ export const signUp = ({
   }
 };
 
-export const createParticipant = (payload) => async (dispatch) => {
+export const createParticipant = ({
+    HTML,
+    CSS,
+    JavaScript,
+    facebook,
+    vk,
+    telegram,
+    ...rest}) => async (dispatch) => {
   dispatch(participantCreatedRequest());
   try {
-    const dataContent = await participantService.create(payload);
+    const dataContent = await participantService.create({
+      technologies: [HTML, CSS, JavaScript],
+      social_networks: [facebook, vk, telegram],
+      ...rest
+    });
     dispatch(participantCreatedRequestSuccess(dataContent));
   } catch (error) {
     dispatch(participantCreatedRequestFailed(error.message));

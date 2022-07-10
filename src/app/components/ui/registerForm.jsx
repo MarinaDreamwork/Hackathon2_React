@@ -12,10 +12,14 @@ import Button from "../common/button";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../../store/participants";
 import { getKeySkills } from "../../../store/keySkills";
+import TechnologiesGroup from "../common/form/GroupFields";
+import { useSocialNetwork } from "../../hooks/socialNetwork";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const keySkillsList = useSelector(getKeySkills());
+  const { technologies } = useTechnologies();
+  const { socialNetworks } = useSocialNetwork();
   console.log("keySkills", keySkillsList);
   const [data, setData] = useState({
     email: "",
@@ -24,10 +28,14 @@ const RegisterForm = () => {
     age: 0,
     about_myself: "",
     photo: "",
-    social_networks: [],
     role: "",
-    technologies: [],
-    key_skills: []
+    key_skills: [],
+    HTML: {id: "", result: ""},
+    CSS: {id: "", result: 0},
+    JavaScript: {id: "", result: 0},
+    facebook: "",
+    vk: "",
+    telegram: ""
   });
   const [errors, setErrors] = useState({});
   const history = useHistory();
@@ -39,6 +47,13 @@ const RegisterForm = () => {
     })); 
   };
 
+   const handleGroupFieldsChange = ({ target }) => {
+    setData(prevState => ({
+      ...prevState,
+      [target.name]: {id: target.id, result: target.value}
+    })); 
+  };
+
   const handleCheckbox = (id) => {
     setData(prevState => ({
       ...prevState,
@@ -46,14 +61,22 @@ const RegisterForm = () => {
     }));
   };
 
-   const handleRangeChange = ({ target }, id) => {
-    setData(prevState => ({
-      ...prevState,
-      technologies: [...prevState.technologies, { ...prevState.technologies, id: id, progressInPercent: target.value}]
-    }));
-  };
+  //  const handleRangeChange = ({ target }, id) => {
+  //   setData(prevState => ({
+  //     ...prevState,
+  //     technologies: [...prevState.technologies, { ...prevState.technologies, id: id, progressInPercent: target.value}]
+  //   }));
+  // };
 
-  const handleSocialGroupChange = (id, { target }) => {
+  // const handleTechChange = ({ target }) => {
+  //   console.log("target", target);
+  //   setData(prevState => ({
+  //     ...prevState,
+  //     technologies: [...prevState.technologies, { id: target.id, percents: target.value}]
+  //   }));
+  // };
+
+    const handleSocialGroupChange = (id, { target }) => {
     setData(prevState => ({
       ...prevState,
       [target.name]: [...prevState[target.name], { id: id, link: target.value }]
@@ -129,6 +152,28 @@ const RegisterForm = () => {
         value={data.key_skills}
         onFieldChange={handleCheckbox}
       />
+      {/* <TextField
+        label="Вашt знание технологии HTML (от 0 до 100, %):"
+        type="text"
+        name="HTML"
+        value={data.HTML}
+        onFieldChange={handleChange}
+        error={errors.HTML}
+      /> */}
+      <TechnologiesGroup
+        items={technologies}
+        label="Введите знания технологий в %:"
+        type="number"
+        value={data[name]}
+        onFieldChange={handleGroupFieldsChange}
+        />
+      <TechnologiesGroup
+        items={socialNetworks}
+        label="Введите Ваши социальные сети (при наличии):"
+        type="text"
+        value={data[name]}
+        onFieldChange={handleGroupFieldsChange}
+        />
      {/* <TechnologiesFields
         label="Выберете от 0 до 100 ваше знание технологии:"
         value={data.technologies}
