@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useTechnologies } from "../../../hooks/technologies";
 
 const RangeArea = ({ type, onFieldChange, value }) => {
- 
+  const { technologies } = useTechnologies();
 
   return (
     <div className="mb-3">

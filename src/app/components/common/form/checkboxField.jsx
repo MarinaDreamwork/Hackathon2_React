@@ -1,23 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useSocialNetwork } from "../../../hooks/socialNetwork";
+import { useSelector } from "react-redux";
+import { getKeySkills } from "../../../../store/keySkills";
 
 const CheckboxField = ({ label, value, onFieldChange, type }) => {
-  const { socialNetworks } = useSocialNetwork();
-  console.log("sic", socialNetworks);
+  const keySkills = useSelector(getKeySkills());
+  console.log("keySkills", keySkills);
 
   return ( 
     <div className="mt-3">
     <label>{label}</label>
     {
-      socialNetworks.map((item, index) => (
+      keySkills.map((item, index) => (
         <div
           key={index.id}
           className="form-check m-1"
         >
         <input
           className="form-check-input"
-          name={item.label}
+          name={item.name}
           type={type}
           value={value}
           id="flexCheckDisabled" 
@@ -27,7 +28,7 @@ const CheckboxField = ({ label, value, onFieldChange, type }) => {
           className="form-check-label"
           htmlFor="flexCheckDisabled"
         >
-          {item.label}
+          {item.name}
         </label>
       </div> ))
     }

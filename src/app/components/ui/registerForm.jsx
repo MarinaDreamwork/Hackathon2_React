@@ -9,11 +9,14 @@ import TechnologiesFields from "./technologiesField";
 import SocialNetworkGroup from "./socialNetworkGroupField";
 import { useHistory } from "react-router-dom";
 import Button from "../common/button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../../store/participants";
+import { getKeySkills } from "../../../store/keySkills";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
+  const keySkillsList = useSelector(getKeySkills());
+  console.log("keySkills", keySkillsList);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -23,7 +26,8 @@ const RegisterForm = () => {
     photo: "",
     social_networks: [],
     role: "",
-    technologies: []
+    technologies: [],
+    key_skills: []
   });
   const [errors, setErrors] = useState({});
   const history = useHistory();
@@ -38,11 +42,11 @@ const RegisterForm = () => {
   const handleCheckbox = (id) => {
     setData(prevState => ({
       ...prevState,
-      social_networks: [...prevState.social_networks, id]
+      key_skills: [...prevState.key_skills, id]
     }));
   };
 
-   const handleRangeChange = ({ target }) => {
+   const handleRangeChange = ({ target }, id) => {
     setData(prevState => ({
       ...prevState,
       technologies: [...prevState.technologies, { ...prevState.technologies, id: id, progressInPercent: target.value}]
@@ -112,18 +116,18 @@ const RegisterForm = () => {
         value={data.photo}
         onFieldChange={handleChange}
       />
-      {/* <CheckboxField
-        label="Выберете ваши социальные сети:"
-        type="checkbox"
-        name="social_networks"
-        value={data.social_networks}
-        onFieldChange={handleCheckbox}
-        /> */}
       <TextArea 
         label="Чем занимался при разработке данного проекта:"
         name="role"
         value={data.role}
         onFieldChange={handleChange}
+      />
+      <CheckboxField
+        label="Выберете ваши ключевые навыки:"
+        type="checkbox"
+        name="key_skills"
+        value={data.key_skills}
+        onFieldChange={handleCheckbox}
       />
      {/* <TechnologiesFields
         label="Выберете от 0 до 100 ваше знание технологии:"

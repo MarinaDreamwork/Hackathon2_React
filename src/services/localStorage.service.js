@@ -25,7 +25,7 @@ function getFavorites() {
   JSON.parse(localStorage.getItem(FAVORITES_LOCAL));
 };
 
-function getUserId() {
+function getParticipantId() {
   return localStorage.getItem(FIREBASE_PARTICIPANT_ID);
 };
 
@@ -49,7 +49,7 @@ function removeAuthData() {
 };
 
 export const localStorageService = {
-  getUserId,
+  getParticipantId,
   setAuthTokens,
   getAccessToken,
   getRefreshToken,

@@ -7,14 +7,17 @@ import {
   loadParticipantsList,
 } from "../store/participants";
 import BreadCrumb from "./components/common/breadcrumbs";
+import { getIsLoadingStatus, loadKeySkillsList } from "../store/keySkills";
 
 const App = () => {
   const dispatch = useDispatch();
   const isLoadingData = useSelector(getDataLoadedStatus());
+  const isLoadingKeySkills = useSelector(getIsLoadingStatus());
 
   useEffect(() => {
-    if (!isLoadingData) {
+    if (!isLoadingData && !isLoadingKeySkills) {
       dispatch(loadParticipantsList());
+      dispatch(loadKeySkillsList());
     }
   }, []);
 

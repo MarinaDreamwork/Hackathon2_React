@@ -3,8 +3,11 @@ import { useHistory } from "react-router-dom";
 import Button from "../common/button";
 import TextField from "../common/form/textField";
 import LargeStyleWrapper from "../common/largeStyleWrapper";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../../store/participants";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const [data, setData] = useState({
     email: "",
     password: ""
@@ -21,8 +24,9 @@ const LoginForm = () => {
 
   const handleLogIn = (e) => {
     e.preventDefault();
-    // отправка данных на сервер / там внутри - получение current user / переход на главную страницу 
+   // там внутри - получение current user //
     console.log("data", data);
+    dispatch(logIn(data));
     history.push("/");
   };
 
