@@ -1,143 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { getIsLoadingStatus, getParticipants } from "../../../store/participants";
 import Badge from "./badge";
 import Button from "./button";
+import Preloader from "./preloader";
 
 const Slider = () => {
-  const slides = document.querySelectorAll(".slide");
-  function clearActiveClasses() {
-    slides.forEach((slide) => {
-      slide.classList.remove("active");
-    });
-  }
-  const toggleActive = () => {
-    for (const slide of slides) {
-      slide.addEventListener("click", () => {
-        clearActiveClasses();
+  const [currentActive, setCurrentActive] = useState("N2PCAmx1jShWIJolb8dsntBz2yO2");
 
-        slide.classList.add("active");
-      });
-    }
+  const toggleActive = (id) => {
+    setCurrentActive(id);
   };
+
+  const participants = useSelector(getParticipants());
+  const isLoadingStatus = useSelector(getIsLoadingStatus());
+
   const bookmark = () => console.log("bookmark");
+  if(isLoadingStatus) {
+    return <Preloader style="success" />;
+  } else {
   return (
     <div className="main_wrapper">
       <div className="slider_wrapper">
-        <div className="slide" onClick={toggleActive}>
-          <div className="active-flex">
-            <div className="img"></div>
-            <div className="description">
-              <div className="name">Зиннатуллин Марат</div>
-              <div className="age"> Возраст : </div>
-              <div className="badges">
-                <Badge color="info" name="TeamMate" />
+        {
+          !isLoadingStatus && participants && (participants.map((p) => (
+            <>
+              <div key={p.id} className={"slide" + (currentActive === p.id ? " active" : "")} onClick={() => toggleActive(p.id)}>
+                <div className="active-flex">
+                  <div className="img"></div>
+                  <div className="description">
+                  <div className="name">{p.name}</div>
+                  <div className="age"> Возраст : {p.age} </div>
+                  <div className="badges">
+                    <Badge color={p.id !== "N2PCAmx1jShWIJolb8dsntBz2yO2"? "info" : "success"} name={p.id !== "N2PCAmx1jShWIJolb8dsntBz2yO2" ? "TeamMate" : "Teamlead"} />
+                  </div>
+                </div>
+                </div>
+                <div className="slide-text">
+                  <hr />
+                   <p>{p.about_myself}</p>
+                </div>
+                <Button
+                  style=" favorites"
+                  color="warning"
+                  name="Добавить в избранное"
+                  onClick={bookmark}
+                />
               </div>
-            </div>
-          </div>
-          <div className="slide-text">
-            <hr />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            molestiae iste veniam, nesciunt vero possimus obcaecati sit
-          </div>
-          <Button
-            color="warning favorites"
-            name="Добавить в избранное"
-            onClick={bookmark}
-          />
-        </div>
-        <div className="slide" onClick={toggleActive}>
-          {" "}
-          <div className="active-flex">
-            <div className="img"></div>
-            <div className="description">
-              <div className="name">Зиннатуллин Марат</div>
-              <div className="age"> Возраст :</div>
-              <div className="badges">
-                <Badge color="info" name="TeamMate" />
-              </div>
-            </div>
-          </div>
-          <div className="slide-text">
-            <hr />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            molestiae iste veniam, nesciunt vero possimus obcaecati sit
-          </div>
-          <Button
-            color="warning favorites"
-            name="Добавить в избранное"
-            onClick={bookmark}
-          />
-        </div>
-        <div className="slide active" onClick={toggleActive}>
-          <div className="active-flex">
-            <div className="img"></div>
-            <div className="description">
-              <div className="name">Трушина Марина</div>
-              <div className="age"> Возраст : </div>
-              <div className="badges">
-                <Badge color="success" name="TeamLead" />
-              </div>
-            </div>
-          </div>
-          <div className="slide-text">
-            <hr />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            molestiae iste veniam, nesciunt vero possimus obcaecati sit
-          </div>
-          <Button
-            color="warning favorites"
-            name="Добавить в избранное"
-            onClick={bookmark}
-          />
-        </div>
-        <div className="slide" onClick={toggleActive}>
-          {" "}
-          <div className="active-flex">
-            <div className="img"></div>
-            <div className="description">
-              <div className="name">Зиннатуллин Марат</div>
-              <div className="age"> Возраст : </div>
-              <div className="badges">
-                <Badge color="info" name="TeamMate" />
-              </div>
-            </div>
-          </div>
-          <div className="slide-text">
-            <hr />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            molestiae iste veniam, nesciunt vero possimus obcaecati sit
-          </div>
-          <Button
-            color="warning favorites"
-            name="Добавить в избранное"
-            onClick={bookmark}
-          />
-        </div>
-        <div className="slide" onClick={toggleActive}>
-          {" "}
-          <div className="active-flex">
-            <div className="img"></div>
-            <div className="description">
-              <div className="name">Зиннатуллин Марат</div>
-              <div className="age"> Возраст : </div>
-              <div className="badges">
-                <Badge color="info" name="TeamMate" />
-              </div>
-            </div>
-          </div>
-          <div className="slide-text">
-            <hr />
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            molestiae iste veniam, nesciunt vero possimus obcaecati sit
-          </div>
-          <Button
-            color="warning favorites"
-            name="Добавить в избранное"
-            onClick={bookmark}
-          />
-        </div>
+            </>
+          ))
+          )
+        }
       </div>
     </div>
   );
+};
 };
 
 export default Slider;

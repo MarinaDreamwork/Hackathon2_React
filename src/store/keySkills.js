@@ -61,7 +61,7 @@ export const createKeySkill = (payload) => async (dispatch) => {
   }
 };
 
-export const getIsLoadingStatus = () => (state) => state.keySkills.isLoading;
+export const getIsKeyLoadingStatus = () => (state) => state.keySkills.isLoading;
 
 export const getKeySkills = () => (state) => state.keySkills.data;
 

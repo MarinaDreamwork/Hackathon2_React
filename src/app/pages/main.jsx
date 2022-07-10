@@ -30,7 +30,6 @@ const Main = () => {
     });
   }, []);
 
-  console.log("photosList", photosList);
   const [test, setTest] = useState([
     {bgColor: "#00695c", completed: 57, type:  "bar", id: new Date().getMilliseconds() * Math.random(), label: "HTML" }
   ]);

@@ -7,7 +7,7 @@ const Progress = ({ changeSelect, label, completed, bgColor, type }) => {
    return (
     <div>
         <div className="containerSelect">
-        <select value={type} className="form-select form-select-sm" ariaLabel=".form-select-lg example" onChange={(e) => changeSelect(e) } > 
+        <select value={type} className="form-select form-select-sm" aria-label=".form-select-lg example" onChange={(e) => changeSelect(e) } > 
             <option  value="bar">Bar</option>
             <option value="circle">Circle</option>
         </select>

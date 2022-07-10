@@ -137,7 +137,6 @@ export const logIn = ( payload ) => async (dispatch) => {
 };
 
 export const getIsLoadingStatus = () => (state) => state.participants.isLoading;
-
 export const getParticipants = () => (state) => state.participants.data;
 export const getDataLoadedStatus = () => (state) => state.participants.dataLoaded;
 

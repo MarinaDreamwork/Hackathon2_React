@@ -8,24 +8,29 @@ import {
   loadParticipantsList,
 } from "../store/participants";
 import BreadCrumb from "./components/common/breadcrumbs";
-import { getIsLoadingStatus, loadKeySkillsList } from "../store/keySkills";
-import { getIsLoadingTechStatus, getTechnologies, loadTechnologiesList } from "../store/technologies";
+import { getIsKeyLoadingStatus, loadKeySkillsList } from "../store/keySkills";
+import { getIsLoadingTechStatus, loadTechnologiesList } from "../store/technologies";
+import Preloader from "./components/common/preloader";
 
 const App = () => {
   const dispatch = useDispatch();
   const isLoadingData = useSelector(getDataLoadedStatus());
-  const isLoadingKeySkills = useSelector(getIsLoadingStatus());
-  const isLoadingTech = useSelector(getIsLoadingStatus());
+  const isLoadingKeySkills = useSelector(getIsKeyLoadingStatus());
+  const isLoadingTech = useSelector(getIsLoadingTechStatus());
 
   const participants = useSelector(getParticipants());
 
   useEffect(() => {
-    if (!isLoadingData && !isLoadingKeySkills &&!isLoadingTech) {
+    if (!isLoadingData && !isLoadingKeySkills && !isLoadingTech) {
       dispatch(loadParticipantsList());
       dispatch(loadKeySkillsList());
       dispatch(loadTechnologiesList());
     }
   }, []);
+
+  if(isLoadingData && isLoadingKeySkills && isLoadingTech) {
+    return <Preloader color="warning" text="Загружаю приложение"/>;
+  } else {
 
   return (
     <>
@@ -41,6 +46,7 @@ const App = () => {
       } */}
     </>
   );
+  };
 };
 
 export default App;
