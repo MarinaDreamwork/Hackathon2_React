@@ -26,5 +26,6 @@ export const Routes = [
   {
     path: LOGIN_ROUTE,
     Component: Login
-  }
+  },
+  
 ];

@@ -1,7 +1,8 @@
 import React from 'react';
 import Badge from './badge';
 import Button from './button';
-
+import { Link } from 'react-router-dom';
+import { USER_PAGE_ROUTE} from '../../utils/constants';
 const Slider = () => {
   const slides = document.querySelectorAll('.slide');
   function clearActiveClasses() {
@@ -21,8 +22,11 @@ const Slider = () => {
   const bookmark = () => console.log('bookmark');
   return (
     <div className="main_wrapper">
+      
       <div className="slider_wrapper">
+    
         <div className="slide" onClick={toggleActive}>
+        
           <div className="active-flex">
             <div className="img"></div>
             <div className="description">
@@ -33,6 +37,7 @@ const Slider = () => {
               </div>
             </div>
           </div>
+          <Link to={`${USER_PAGE_ROUTE}/1`}>Перейти</Link>
           <div className="slide-text">
             <hr />
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
@@ -43,7 +48,9 @@ const Slider = () => {
             name="Добавить в избранное"
             onClick={bookmark}
           />
+          
         </div>
+        
         <div className="slide" onClick={toggleActive}>
           {' '}
           <div className="active-flex">
