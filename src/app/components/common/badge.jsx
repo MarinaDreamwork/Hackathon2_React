@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Badge = ({ color, name, ...rest }) => {
   return (
-    <span className={"badge m-1 bg-" + color} {...rest}>
+    <span className={'badge m-1 bg-' + color} {...rest}>
       {name}
     </span>
   );
@@ -11,6 +11,6 @@ const Badge = ({ color, name, ...rest }) => {
 
 Badge.propTypes = {
   color: PropTypes.string,
-  name: PropTypes.string,
+  name: PropTypes.string
 };
 export default Badge;

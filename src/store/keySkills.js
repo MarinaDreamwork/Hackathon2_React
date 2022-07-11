@@ -1,9 +1,9 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
-import { generateErrors } from "../app/utils/generateErrors";
-import keySkillService from "../services/keySkill.service";
+import { createAction, createSlice } from '@reduxjs/toolkit';
+import { generateErrors } from '../app/utils/generateErrors';
+import keySkillService from '../services/keySkill.service';
 
 const keySkillsSlice = createSlice({
-  name: "keySkills",
+  name: 'keySkills',
   initialState: {
     data: null,
     isLoading: false,
@@ -22,10 +22,10 @@ const keySkillsSlice = createSlice({
       state.isLoading = false;
     },
     keySkillCreatedRequestSuccess: (state, action) => {
-       if (!Array.isArray(state.data)) {
+      if (!Array.isArray(state.data)) {
         state.data = [];
       }
-        state.data.push(action.payload);
+      state.data.push(action.payload);
     }
   }
 });
@@ -38,8 +38,10 @@ const {
   keySkillCreatedRequestSuccess
 } = actions;
 
-const keySkillCreatedRequest = createAction("keySkills/createdRequest");
-const keySkillCreatedRequestFailed = createAction("keySkills/createdRequestFailed");
+const keySkillCreatedRequest = createAction('keySkills/createdRequest');
+const keySkillCreatedRequestFailed = createAction(
+  'keySkills/createdRequestFailed'
+);
 
 export const loadKeySkillsList = () => async (dispatch) => {
   dispatch(keySkillsRequested());

@@ -1,6 +1,6 @@
-import httpService from "./http.service";
+import httpService from './http.service';
 
-const keySkillEndPoint = "keySkill/";
+const keySkillEndPoint = 'keySkill/';
 
 const keySkillService = {
   get: async () => {

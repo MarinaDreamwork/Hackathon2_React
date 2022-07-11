@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import AppRouter from "./components/AppRouter";
-import Navbar from "./components/common/navbar";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import AppRouter from './components/AppRouter';
+import Navbar from './components/common/navbar';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getDataLoadedStatus,
   getParticipants,
   loadParticipantsList,
-} from "../store/participants";
-import BreadCrumb from "./components/common/breadcrumbs";
-import { getIsKeyLoadingStatus, loadKeySkillsList } from "../store/keySkills";
-import { getIsLoadingTechStatus, loadTechnologiesList } from "../store/technologies";
-import Preloader from "./components/common/preloader";
+} from '../store/participants';
+import BreadCrumb from './components/common/breadcrumbs';
+import { getIsKeyLoadingStatus, loadKeySkillsList } from '../store/keySkills';
+import { getIsLoadingTechStatus, loadTechnologiesList } from '../store/technologies';
+import Preloader from './components/common/preloader';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const App = () => {
   }, []);
 
   if(isLoadingData && isLoadingKeySkills && isLoadingTech) {
-    return <Preloader color="warning" text="Загружаю приложение"/>;
+    return <Preloader color='warning' text='Загружаю приложение'/>;
   } else {
 
   return (
