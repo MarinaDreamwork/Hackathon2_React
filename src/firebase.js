@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
+import { config } from './app/config.json';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -9,7 +10,7 @@ const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_WEB_API_KEY,
   authDomain: 'hackathon-team-8b203.firebaseapp.com',
   databaseURL:
-    'https://hackathon-team-8b203-default-rtdb.europe-west1.firebasedatabase.app',
+    config.apiEndPoint,
   projectId: 'hackathon-team-8b203',
   storageBucket: 'hackathon-team-8b203.appspot.com',
   messagingSenderId: '1045649193034',
