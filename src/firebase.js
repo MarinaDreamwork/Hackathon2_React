@@ -6,7 +6,7 @@ import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyBfd_spat_DBbUZhLBjGYeqVip0KMhO80M',
+  apiKey: process.env.REACT_APP_FIREBASE_WEB_API_KEY,
   authDomain: 'hackathon-team-8b203.firebaseapp.com',
   databaseURL:
     'https://hackathon-team-8b203-default-rtdb.europe-west1.firebasedatabase.app',
